@@ -1,12 +1,10 @@
 <?php
 namespace App\Controllers;
- require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
  
-
+use App\Models\Tags;
 
 class TagsController{
-
-
 
     public function index(){
         $tags = Tags::all();
@@ -21,8 +19,9 @@ class TagsController{
         
     }
 
-    public function show($id){
-        $tag = Tags::find($id);
+    public static function show(){
+        $tags = Tags::showTags();
+        return $tags;
     }
 
     public function edit($id){
