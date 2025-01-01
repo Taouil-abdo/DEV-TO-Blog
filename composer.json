@@ -1,0 +1,17 @@
+{
+    "name": "youcode/dev-to-blogging",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Taouil-abdo",
+            "email": "abdotaouil03@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
