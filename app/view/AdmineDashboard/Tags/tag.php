@@ -3,7 +3,8 @@ require_once __DIR__."/../../../controllers/TagsController.php";
 use App\Controllers\TagsController;
 
 $tags = TagsController::show();
-$totalTags = TagsController::Counttags();
+$totalTags = TagsController::totalTags();
+TagsController::create();
 
  ?>
 
@@ -125,6 +126,18 @@ $totalTags = TagsController::Counttags();
 
         
 
+              <form method="POST">
+                <div>
+                    <div>
+                        <label for="tag">TagName</label>
+                        <input type="text" name="tag_name" placeholder="hhhhh" >
+                    </div>
+                </div>
+                <button type="submit" name="addTag">send</button>
+              </form>
+
+
+
         <!-- tablue -->
             <div class="container mx-auto p-4">
          <!-- <div class="overflow-x-auto"> -->
@@ -155,7 +168,7 @@ $totalTags = TagsController::Counttags();
                       echo "<tr><td colspan='8' class='py-2 px-4 text-center'>No data available</td></tr>";
                       }
                     ?>
-            </tbody>
+                </tbody>
             </table>
             </div>
        </div>

@@ -9,6 +9,7 @@ class Tags{
 
 
     private static $table = "tags";
+    private static $column = "tag_name";
 
 
     public static function showTags(){
@@ -17,15 +18,21 @@ class Tags{
         return $tags;
     }
 
-    public function addTags(){
+    public static function addTags($values){
 
+        $tags=Database::Add(self::$table,self::$column,$values);
+        // return $tags;
+        if($tags){
+
+            header("Location:tag.php");
+        }
 
     }
 
     public function deletTag($id){
 
 
-    }
+    } 
 
     public function getTagById(){
 
@@ -33,6 +40,13 @@ class Tags{
     }
 
     public function update(){
+
+    }
+
+    public static function countTags(){
+
+        $countTags=Database::countItems(self::$table);
+        return $countTags;
 
     }
 

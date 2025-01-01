@@ -79,12 +79,23 @@ class Database {
         return $users[0];
     }
 
+    public static function Add($table,$colm,$val){
+
+        $conn = Database::getInstanse()->getConnection();
+         
+        $query = "INSERT INTO $table ($colm) VALUES (:value)";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':value',$val);
+        return $stmt->execute();
+    }
+
 
       
 }
 
-// $bn=Database::getInstanse();
-// $conn = $bn->get();
+// $bn=Database::Add('tags','tag_name','"lol"');
 
-// var_dump($conn);
+// var_dump($bn);
+
+
 

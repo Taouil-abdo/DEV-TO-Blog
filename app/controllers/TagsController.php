@@ -11,7 +11,14 @@ class TagsController{
     }
 
 
-    public function create(){
+    public static function create(){
+
+        if (isset($_POST['addTag']) && $_SERVER["REQUEST_METHOD"] == "POST"){
+               $tagName = $_POST['tag_name'];
+               $result=Tags::addTags($tagName);
+        }
+
+       return $result;
         
     }
 
@@ -36,9 +43,18 @@ class TagsController{
         
     }
 
+    public static function totalTags(){
+
+        $countTags = Tags::countTags();
+        return $countTags;
+
+    }
+
     
 
 
 
 
 }
+
+
