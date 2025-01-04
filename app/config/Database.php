@@ -54,19 +54,24 @@ class Database {
         return self::$conn;
     }
 
+// _______________ ORMMethodes __________________
 
 
-    public static function getData($table){
+
+// ---------------------- getData -----------------
+
+    public static function getData($table,$xx = ''){
 
     $conn = self::getInstanse()->getConnection();
 
-    $query = "SELECT * FROM $table";
+    $query = "SELECT * FROM $table $xx";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $users = $stmt->fetchAll();
     return $users;
     }
 
+// ---------------------- countItems -----------------
 
     public static function countItems($table){
 
@@ -79,6 +84,8 @@ class Database {
         return $users[0];
     }
 
+// ---------------------- Add -----------------
+
     public static function Add($table,$colm,$val){
 
         $conn = self::getInstanse()->getConnection();
@@ -89,6 +96,7 @@ class Database {
         return $stmt->execute();
     }
 
+// ---------------------- DeleteItem -----------------
 
     public static function DeleteItem($table,$id){
 
@@ -102,6 +110,8 @@ class Database {
 
     }
 
+    // ---------------------- findById -----------------
+
     public static function findById($table,$id){
 
         $conn = self::getInstanse()->getConnection();
@@ -113,7 +123,7 @@ class Database {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    
+    // ---------------------- update -----------------
 
     public static function update($table,$columns,$id){
         
@@ -125,6 +135,8 @@ class Database {
         return $stmt->execute();
 
         }
+
+        
     
       
 }

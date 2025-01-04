@@ -26,48 +26,23 @@ $totalUsers = UsersController::CountUsers();
             <span class="text-white font-bold uppercase">DivoBlog</span>
         </div>
         <div class="flex flex-col flex-1 overflow-y-auto">
-            <nav class="flex-1 px-2 py-4 bg-gray-800">
-                <a href="#" class="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    Dashboard
-                </a>
-                <a href="./Users/User.php" class="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    Users
-                </a>
-                <a href="Articles/Article.php" class="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    Articles
-                </a>
-                <a href="categories/category.php" class="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    Categories
-                </a>
-                <a href="Tags/Tag.php" class="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    Tags
-                </a>
-            </nav>
+        <nav class="flex-1 px-4 py-4">
+            <a href="../dashboard.php" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">
+                <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+            </a>
+            <a href="../Users/User.php" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
+                <i class="fas fa-users mr-2"></i> Users
+            </a>
+            <a href="#" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
+                <i class="fas fa-file-alt mr-2"></i> Articles
+            </a>
+            <a href="../Categories/Category.php" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
+                <i class="fas fa-folder-open mr-2"></i> Categories
+            </a>
+            <a href="../Tags/Tag.php" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
+                <i class="fas fa-tags mr-2"></i> Tags
+            </a>
+        </nav>
         </div>
     </div>
 

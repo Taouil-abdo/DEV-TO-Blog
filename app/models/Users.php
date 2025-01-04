@@ -23,7 +23,10 @@ public static function countUsers(){
 }
 
 
-public function login(){
+public static function register(){
+
+
+
 
 
 
