@@ -6,24 +6,14 @@ use App\Models\Tags;
 
 class TagsController{
 
-    public function index(){
-        $tags = Tags::all();
-    }
-
+    
 
     public static function create(){
 
         if (isset($_POST['addTag']) && $_SERVER["REQUEST_METHOD"] == "POST"){
                $tagName = $_POST['tag_name'];
                $result=Tags::addTags($tagName);
-        }
-
-       return $result;
-        
-    }
-
-    public function store(){
-        
+        }        
     }
 
     public static function show(){
@@ -31,15 +21,28 @@ class TagsController{
         return $tags;
     }
 
-    public function edit($id){
-        $tag = Tags::find($id);
-    }
+    public static function update(){
 
-    public function update($id){
+        if(isset($_POST['updateTag']) && $_SERVER['REQUEST_METHOD'] == "POST"){
+            $id = $_GET['id'];
+            $tagName=$_POST['tag_name'];
+            var_dump($id,$tagName);
+            $result = Tags::update($tagName,$id);
+            if($result){
+                die("hell ya");
+            }
+        }
         
     }
 
-    public function destroy($id){
+    public static function destroy(){
+
+        if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['id'])) {
+            $id = $_GET["id"];
+            Tags::deletTag($id);
+            header("Location: tag.php");
+            exit;
+        }
         
     }
 
@@ -48,6 +51,12 @@ class TagsController{
         $countTags = Tags::countTags();
         return $countTags;
 
+    }
+
+    public static function getTagById(){
+            $id=$_GET['id'];
+            $tagbyid=Tags::findTagById($id);
+            return $tagbyid;
     }
 
     

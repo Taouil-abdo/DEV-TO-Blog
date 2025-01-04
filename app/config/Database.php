@@ -9,21 +9,21 @@ use PDOException;
 
 class Database {
 
+
     private static $ServerName;
     private static $UserName;
     private static $PassWord;
     private static $DbName;
-
     private static $conn;
     private static $instance = null;
 
     private static $table;
 
+
     public function __construct() {
         $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
         
-
         self::$ServerName = $_ENV['DB_HOST'];
         self::$UserName = $_ENV['DB_USER'];
         self::$PassWord = $_ENV['DB_PASS'];
@@ -58,7 +58,7 @@ class Database {
 
     public static function getData($table){
 
-    $conn = Database::getInstanse()->getConnection();
+    $conn = self::getInstanse()->getConnection();
 
     $query = "SELECT * FROM $table";
     $stmt = $conn->prepare($query);
@@ -70,7 +70,7 @@ class Database {
 
     public static function countItems($table){
 
-        $conn = Database::getInstanse()->getConnection();
+        $conn = self::getInstanse()->getConnection();
 
         $query = "SELECT COUNT(*) FROM $table";
         $stmt = $conn->prepare($query);
@@ -81,7 +81,7 @@ class Database {
 
     public static function Add($table,$colm,$val){
 
-        $conn = Database::getInstanse()->getConnection();
+        $conn = self::getInstanse()->getConnection();
          
         $query = "INSERT INTO $table ($colm) VALUES (:value)";
         $stmt = $conn->prepare($query);
@@ -90,6 +90,42 @@ class Database {
     }
 
 
+    public static function DeleteItem($table,$id){
+
+        $conn = self::getInstanse()->getConnection();
+
+        $query = "DELETE FROM $table where id = :id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':id',$id);
+
+       return $stmt->execute();
+
+    }
+
+    public static function findById($table,$id){
+
+        $conn = self::getInstanse()->getConnection();
+
+        $query = "SELECT * FROM $table WHERE id = :id";
+        $stmt=$conn->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    
+
+    public static function update($table,$columns,$id){
+        
+        $conn = self::getInstanse()->getConnection();
+
+        $query="UPDATE $table SET $columns where id=:id";
+        $stmt=$conn->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+
+        }
+    
       
 }
 

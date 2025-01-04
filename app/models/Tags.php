@@ -18,29 +18,37 @@ class Tags{
         return $tags;
     }
 
+
+
     public static function addTags($values){
 
         $tags=Database::Add(self::$table,self::$column,$values);
         // return $tags;
         if($tags){
-
             header("Location:tag.php");
         }
 
     }
 
-    public function deletTag($id){
 
 
+    public static function deletTag($id){
+
+        $ff = Database::DeleteItem(self::$table,$id);
+        return $ff;
     } 
 
-    public function getTagById(){
+    public static function findTagById($id){
 
-
+        $getTagId=Database::findById(self::$table,$id);
+        return $getTagId;
     }
 
-    public function update(){
+    public static function update($tagName,$id){
 
+        $columns = "tag_name = '$tagName'";
+        $rr = Database::update(self::$table,$columns,$id);
+        return $rr;
     }
 
     public static function countTags(){
