@@ -35,6 +35,16 @@ class UsersController{
         }
     }
 
+    public static function login(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["submitLogin"])) {
+
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $result = Users::loginUser($email, $password);
+            var_dump($result);
+        }
+
+      }
 
     
 
