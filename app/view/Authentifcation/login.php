@@ -1,3 +1,14 @@
+<?php
+
+// require_once __DIR__.'/../../controllers/UsersController.php';
+require_once __DIR__."/../../../vendor/autoload.php";
+
+use App\Controllers\UsersController;
+
+UsersController::login();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +28,7 @@
     </div>
     <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
 
-      <form method="POST" action="../../app/controllers/UsersContoller.php" class="max-w-md mx-auto">
+      <form method="POST" action="" class="max-w-md mx-auto">
         <div>
           <h1 class="text-2xl font-semibold">Login</h1>
         </div>
@@ -32,7 +43,7 @@
               <label for="password" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
             </div>
             <div class="relative">
-              <button type="submit" name="login" class="bg-teal-900 text-white rounded-md px-2 py-1">Submit</button>
+              <button type="submit" name="submitLogin" class="bg-teal-900 text-white rounded-md px-2 py-1">Submit</button>
             </div>
           </div>
         </div>

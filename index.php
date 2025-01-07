@@ -1,3 +1,16 @@
+<?php
+// require_once __DIR__."/app/controllers/ArticlesController.php";
+require_once __DIR__."/vendor/autoload.php";
+
+use App\Controllers\ArticlesController;
+$rows = ArticlesController::getPublishedArticle();
+
+session_start();
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,39 +46,36 @@
             </li>
 
             <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Careers </a>
-            </li>
-
-            <li>
               <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> History </a>
             </li>
 
             <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Services </a>
-            </li>
-
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Projects </a>
-            </li>
-
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Blog </a>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="app/view/pages/blog.php"> Blog </a>
             </li>
           </ul>
         </nav>
 
-        <div class="flex items-center gap-4">
-          <div class="sm:flex sm:gap-4">
-            <a class="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow" href="app/view/Authentifcation/login.php">
-              Login
-            </a>
-
-            <div class="hidden sm:flex">
-              <a class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600" href="app/view/Authentifcation/register.php">
-                Register
-              </a>
-            </div>
+          <div class="flex items-center gap-4">
+            <?php if ($_SESSION["role"] != 'admin' && $_SESSION["role"] != 'user' && $_SESSION["role"] != 'author') { ?>
+                <div class="sm:flex sm:gap-4">
+                     <a class="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow" href="app/view/Authentifcation/login.php">
+                      Login
+                     </a>
+                   <div class="hidden sm:flex">
+                     <a class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600" href="app/view/Authentifcation/register.php">
+                    Register
+                     </a>
+                   </div>''
+                </div>
+            <?php } elseif ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'user' || $_SESSION['role'] == 'author') { ?>
+                <div class="flex-shrink-0">
+                  <button>
+                   <img class="w-10 h-10 rounded-full mr-4" src="https://tailwindcss.com/img/jonathan.jpg" alt="Avatar of Jonathan Reinink">
+                  </button>
+                </div>
+            <?php } ?>
           </div>
+
 
           <div class="block md:hidden">
             <button class="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
@@ -106,9 +116,16 @@
     <!-- ------------------------ Derniers articles ajoutés --------------- -->
     
     <div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16">
+
+         <div class="relative z-10 flex flex-col justify-center items-center h-full text-center">
+          <p class="text-4xl font-bold leading-tight mb-12">Latest Articles Added</p>
+         </div>
      <div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10">
+         <?php foreach($rows as $row): ?>
         <div class="border-r border-b border-l border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
-            <img src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500" class="w-full mb-3">
+            
+          <a href="app/view/pages/blog.php">
+            <img src="app/asset/uploads/Articles/<?php echo $row['featured_image']?>" alt="Player Image" class="w-full h-[16rem] mb-3">
             <div class="p-4 pt-2">
                 <div class="mb-8">
                     <p class="text-sm text-gray-600 flex items-center">
@@ -120,86 +137,25 @@
                         </svg>
                         Members only
                     </p>
-                    <a href="#" class="text-gray-900 font-bold text-lg mb-2 hover:text-indigo-600 inline-block">Can
-                        coffee make you a better developer?</a>
-                    <p class="text-gray-700 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    <a href="#" class="text-gray-900 font-bold text-lg mb-2 hover:text-indigo-600 inline-block">
+                        <?= $row['title'] ?>
+                        </a>
+                    <p class="text-gray-700 text-sm"><?= $row['content'] ?>  /  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                         Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
                 </div>
                 <div class="flex items-center">
-                    <a
-                        href="#"><img class="w-10 h-10 rounded-full mr-4" src="https://tailwindcss.com/img/jonathan.jpg" alt="Avatar of Jonathan Reinink"></a>
+                    <a href="#"><img class="w-10 h-10 rounded-full mr-4" src="https://tailwindcss.com/img/jonathan.jpg" alt="Avatar of Jonathan Reinink"></a>
                     <div class="text-sm">
-                        <a href="#" class="text-gray-900 font-semibold leading-none hover:text-indigo-600">Jonathan
-                            Reinink</a>
-                        <p class="text-gray-600">Aug 18</p>
+                        <a href="#" class="text-gray-900 font-semibold leading-none hover:text-indigo-600"><?= $row['username'] ?>
+                            </a>
+                        <p class="text-gray-600"><?= $row['created_at'] ?></p>
                     </div>
                 </div>
             </div>
+          </a>
+            
         </div>
-
-        <div
-            class="border-r border-b border-l border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
-            <img src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500" class="w-full mb-3">
-            <div class="p-4 pt-2">
-                <div class="mb-8">
-                    <p class="text-sm text-gray-600 flex items-center">
-                        <svg class="fill-current text-gray-500 w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20">
-                            <path
-                                d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z">
-                            </path>
-                        </svg>
-                        Members only
-                    </p>
-                    <a href="#" class="text-gray-900 font-bold text-lg mb-2 hover:text-indigo-600 inline-block">Can
-                        coffee make you a better developer?</a>
-                    <p class="text-gray-700 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-                </div>
-                <div class="flex items-center">
-                    <a
-                        href="#"><img class="w-10 h-10 rounded-full mr-4" src="https://tailwindcss.com/img/jonathan.jpg" alt="Avatar of Jonathan Reinink"></a>
-                    <div class="text-sm">
-                        <a href="#" class="text-gray-900 font-semibold leading-none hover:text-indigo-600">Jonathan
-                            Reinink</a>
-                        <p class="text-gray-600">Aug 18</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div
-            class="border-r border-b border-l border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
-            <img src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500" class="w-full mb-3">
-            <div class="p-4 pt-2">
-                <div class="mb-8">
-                    <p class="text-sm text-gray-600 flex items-center">
-                        <svg class="fill-current text-gray-500 w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20">
-                            <path
-                                d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z">
-                            </path>
-                        </svg>
-                        Members only
-                    </p>
-                    <a href="#" class="text-gray-900 font-bold text-lg mb-2 hover:text-indigo-600 inline-block">Can
-                        coffee make you a better developer?</a>
-                    <p class="text-gray-700 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-                </div>
-                <div class="flex items-center">
-                    <a
-                        href="#"><img class="w-10 h-10 rounded-full mr-4" src="https://tailwindcss.com/img/jonathan.jpg" alt="Avatar of Jonathan Reinink"></a>
-                    <div class="text-sm">
-                        <a href="#" class="text-gray-900 font-semibold leading-none hover:text-indigo-600">Jonathan
-                            Reinink</a>
-                        <p class="text-gray-600">Aug 18</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+        <?php endforeach ?>
        </div>
     </div>
 

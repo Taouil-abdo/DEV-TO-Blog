@@ -11,26 +11,23 @@ class Users{
  private static $table = "users";
 
 
-public static function showUsers(){
-    $query = database::getData(self::$table);
-    return $query;
-}
+// public static function showUsers(){
+//     $query = database::getData(self::$table);
+//     return $query;
+// }
 
-public static function countUsers(){
+// public static function countUsers(){
 
-    $query = database::countItems(self::$table);
-    return $query;
-}
-
-
-public static function register(){
+//     $query = database::countItems(self::$table);
+//     return $query;
+// }
 
 
 
 
 
 
-}
+
 
 
 }

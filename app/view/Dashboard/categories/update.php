@@ -1,5 +1,7 @@
 <?php 
-require_once __DIR__."/../../../controllers/CategoriesController.php";
+// require_once __DIR__."/../../../controllers/CategoriesController.php";
+require_once __DIR__."/../../../../vendor/autoload.php";
+
 use App\Controllers\CategoriesController;
 
 $nn=CategoriesController::getCategoryById();

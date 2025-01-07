@@ -1,9 +1,12 @@
 <?php 
-require_once __DIR__."/../../controllers/UsersController.php";
+// require_once __DIR__."/../../controllers/UsersController.php";
+require_once __DIR__."/../../../vendor/autoload.php";
+
 use App\Controllers\UsersController;
 
 $rows = UsersController::show();
 $totalUsers = UsersController::CountUsers();
+UsersController::logoutview();
 
  ?>
 
@@ -27,21 +30,26 @@ $totalUsers = UsersController::CountUsers();
         </div>
         <div class="flex flex-col flex-1 overflow-y-auto">
         <nav class="flex-1 px-4 py-4">
-            <a href="../dashboard.php" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">
+            <a href="dashboard.php" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">
                 <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
             </a>
-            <a href="../Users/User.php" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
+            <a href="Users/User.php" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
                 <i class="fas fa-users mr-2"></i> Users
             </a>
-            <a href="#" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
+            <a href="Article/Article.php" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
                 <i class="fas fa-file-alt mr-2"></i> Articles
             </a>
-            <a href="../Categories/Category.php" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
+            <a href="Categories/Category.php" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
                 <i class="fas fa-folder-open mr-2"></i> Categories
             </a>
-            <a href="../Tags/Tag.php" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
+            <a href="Tags/Tag.php" class="flex items-center px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
                 <i class="fas fa-tags mr-2"></i> Tags
             </a>
+            <form method='POST' class="flex items-center gap-3 px-4 py-2 mt-2 text-gray-300 hover:bg-gray-700 rounded-md">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <button type="submit" name="logout">Logout</button>
+            </form>
+
         </nav>
         </div>
     </div>
@@ -77,9 +85,9 @@ $totalUsers = UsersController::CountUsers();
             <p class="mt-2 text-gray-600">This is an example dashboard using Tailwind CSS.</p>
           </div>
 
-          <!-- button Ajouter player -->
+          <!-- button Ajouter  -->
           <div class="btnAjouter">
-               <button id="btnAjouter" class="h-10 w-24 bg-blue-600 text-white rounded shadow-lg">Add Player</button>
+               <button id="btnAjouter" class="h-10 w-24 bg-blue-600 text-white rounded shadow-lg">Add  </button>
           </div>
 
         </div>

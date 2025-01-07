@@ -1,3 +1,14 @@
+<?php
+
+// require_once __DIR__.'/../../controllers/UsersController.php';
+require_once __DIR__."/../../../vendor/autoload.php";
+
+use App\Controllers\UsersController;
+
+UsersController::register();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +28,7 @@
     </div>
     <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
 
-      <form method="POST" action="" class="max-w-md mx-auto">
+      <form method="POST" class="max-w-md mx-auto">
         <div>
           <h1 class="text-2xl font-semibold">register</h1>
         </div>

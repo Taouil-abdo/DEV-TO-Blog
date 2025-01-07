@@ -54,21 +54,22 @@ class Database {
         return self::$conn;
     }
 
-// _______________ ORMMethodes __________________
 
+
+// _______________ ORMMethodes __________________
 
 
 // ---------------------- getData -----------------
 
     public static function getData($table,$xx = ''){
 
-    $conn = self::getInstanse()->getConnection();
+     $conn = self::getInstanse()->getConnection();
 
-    $query = "SELECT * FROM $table $xx";
-    $stmt = $conn->prepare($query);
-    $stmt->execute();
-    $users = $stmt->fetchAll();
-    return $users;
+     $query = "SELECT * FROM $table $xx";
+     $stmt = $conn->prepare($query);
+     $stmt->execute();
+     $users = $stmt->fetchAll();
+     return $users;
     }
 
 // ---------------------- countItems -----------------
@@ -134,10 +135,73 @@ class Database {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
 
-        }
+    }
+
+    // |---------------------- AddUser -----------------|
+
+    public static function AddUser($table, $columns, $values)
+    {
+      $conn = self::getInstanse()->getConnection();
+    
+      $columnsArray = explode(',', $columns);
+      $placeholders = implode(', ', array_fill(0, count($columnsArray), '?'));
+
+      $query = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+      $stmt = $conn->prepare($query);
+
+      return $stmt->execute($values);
+    }
+
+    // |---------------------- findByEmail -----------------|
+
+    public static function findByEmail($email){
+
+      $conn = self::getInstanse()->getConnection();
+
+      $query = "SELECT * FROM users WHERE email = :email";
+      $stmt=$conn->prepare($query);
+      $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
         
+    public static function addArticle($table, $columns, $values ,$tags){
+
     
+        $conn = self::getInstanse()->getConnection();
+        $columnsArray = explode(',', $columns);
+        $placeholders = implode(', ', array_fill(0, count($columnsArray), '?'));
+  
+        $query = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+        $stmt = $conn->prepare($query);
+
+          if($stmt->execute($values)){
+            $lastid = $conn->lastInsertId();
+            var_dump($lastid);
+            self::addTagsForArticle($lastid, $tags);
+            return true; 
+
+        }
+    
+    }
+
+    public static function addTagsForArticle($lastid, $tags){
+        $conn = self::getInstanse()->getConnection();
+        try {
+            foreach ($tags as $tag) {
+                if (!empty($tag)) {
+                    $sql = "INSERT INTO article_tags (article_id, tag_id) VALUES (?, ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute([$lastid , $tag]);
+                } else {
+                    echo "Error: Tag not found - $tag";
+                }
+            }
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
       
 }
 

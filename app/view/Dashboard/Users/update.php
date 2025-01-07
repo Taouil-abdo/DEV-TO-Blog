@@ -1,5 +1,7 @@
 <?php 
 // require_once __DIR__."/../../app/controllers/UsersController.php";
+// require_once __DIR__."/../../../../vendor/autoload.php";
+
 // use App\Controllers\UsersController;
 
 // $rows = UsersController::show();

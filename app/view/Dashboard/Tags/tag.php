@@ -1,5 +1,7 @@
 <?php 
-require_once __DIR__."/../../../controllers/TagsController.php";
+// require_once __DIR__."/../../../controllers/TagsController.php";
+require_once __DIR__."/../../../../vendor/autoload.php";
+
 use App\Controllers\TagsController;
 
 $tags = TagsController::show();
@@ -166,6 +168,15 @@ $hh=TagsController::destroy();
     
 </div>
 
+<script>
+
+  let btnAjouter = document.getElementById("btnAjouter");
+ let formParent=document.getElementById("form-parent");
+
+ btnAjouter.addEventListener("click",function(){
+    formParent.classList.toggle("hidden");
+ })
 </script>
+
 </body>
 </html>

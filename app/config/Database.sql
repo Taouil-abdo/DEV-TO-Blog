@@ -49,9 +49,9 @@ CREATE TABLE articles (
     KEY idx_articles_author (author_id),
     KEY idx_articles_status_date (status, scheduled_date),
     CONSTRAINT fk_articles_category FOREIGN KEY (category_id) 
-        REFERENCES categories (id),
+        REFERENCES categories (id) ON DELETE CASCADE,
     CONSTRAINT fk_articles_author FOREIGN KEY (author_id) 
-        REFERENCES users (id)
+        REFERENCES users (id) ON DELETE CASCADE ON UPDATE 
 ) ;
 
 -- Create article_tags table

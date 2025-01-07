@@ -1,13 +1,10 @@
 <?php
 
-require_once __DIR__."/../../../controllers/TagsController.php";
-use App\Controllers\TagsController;
+require_once __DIR__."/../../../../vendor/autoload.php";
 
+use App\Controllers\TagsController;
 $dd=TagsController::getTagById();
 TagsController::update();
-
-var_dump($dd);
-
 
 ?>
 
