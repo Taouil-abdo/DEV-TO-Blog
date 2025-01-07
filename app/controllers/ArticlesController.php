@@ -80,9 +80,56 @@ public static function updateArticleForAuthore(){
 }
 
 
+public static function delete(){
 
+    if(isset($_GET['Article_id']) && !empty($_GET['Article_id'])){
+        $id=$_GET['Article_id'];
+        var_dump($id);
+        $result = Articles::deleteArticle($id);
+        var_dump($result);
+     }
     
+}
 
+
+public static function getPublishedArticle(){
+
+    $result = Articles::getPublishedArticle();
+    return $result;
+
+}
+    
+public static function findArticleById(){
+
+    if(isset($_GET['Article_id'])){
+        $id=$_GET['Article_id'];
+        $result = Articles::getArticleByID($id);
+        return $result;
+    }
+}
+
+
+public static function getArticleBystatus(){
+
+        $result= Articles::getArticleBystatus();
+        return $result;
+
+}
+
+
+public static function getArticleById(){
+
+    if(isset($_GET['id'])){
+        $id=$_GET['id'];
+
+        $result=Articles::getArticleByID($id);
+        return $result;
+
+        var_dump($result);
+    }
+
+
+}
 
 
 
