@@ -44,11 +44,10 @@ class UsersController{
             var_dump($result);
         }
 
-      }
+    }
 
-    
-      public static function logoutview()
-      {
+    public static function logoutview()
+    {
           if(isset($_POST['logout'])){
               session_start();
               session_destroy();
@@ -56,6 +55,6 @@ class UsersController{
               exit;
           }
           
-      }
+    }
 
 }

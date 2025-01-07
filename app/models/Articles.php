@@ -116,7 +116,51 @@ class Articles{
 
     }
 
-
+    public static function UpdateArticleAuthore($id, $title, $slug, $content, $excerpt, $meta_description, $featured_image, $scheduled_date, $category_id, $author_id, $tag_id) {
+        $conn = Database::getInstanse()->getConnection();
+    
+        $query = "UPDATE articles
+                  SET title = :title, slug = :slug, content = :content, excerpt = :excerpt, meta_description = :meta_description, featured_image = :featured_image, scheduled_date = :scheduled_date, category_id = :category_id, author_id = :author_id
+                  WHERE id = :id AND author_id = :author_id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':slug', $slug);
+        $stmt->bindParam(':content', $content);
+        $stmt->bindParam(':excerpt', $excerpt);
+        $stmt->bindParam(':meta_description', $meta_description);
+        $stmt->bindParam(':featured_image', $featured_image);
+        $stmt->bindParam(':scheduled_date', $scheduled_date);
+        $stmt->bindParam(':category_id', $category_id);
+        $stmt->bindParam(':author_id', $author_id);
+        $stmt->bindParam(':id', $id);
+        $result = $stmt->execute();
+    
+        // Debugging output
+        echo "Update Query: $query<br>";
+        echo "Result: " . ($result ? "Success" : "Failure") . "<br>";
+    
+        $deleteTagsQuery = "DELETE FROM article_tags WHERE article_id = :id";
+        $deleteTagsStatement = $conn->prepare($deleteTagsQuery);
+        $deleteTagsStatement->bindParam(':id', $id);
+        $tt = $deleteTagsStatement->execute();
+    
+        // Debugging output
+        echo "Delete Tags Query: $deleteTagsQuery<br>";
+        echo "Delete Tags Result: " . ($tt ? "Success" : "Failure") . "<br>";
+    
+        foreach ($tag_id as $tagId) {
+            $ArticletagQuery = "INSERT INTO article_tags (article_id, tag_id) VALUES (:id, :tagId)";
+            $ArticletagStatement = $conn->prepare($ArticletagQuery);
+            $ArticletagStatement->bindParam(':id', $id);
+            $ArticletagStatement->bindParam(':tagId', $tagId);
+            $rrr = $ArticletagStatement->execute();
+    
+            // Debugging output
+            echo "Insert Tag Query: $ArticletagQuery<br>";
+            echo "Insert Tag Result: " . ($rrr ? "Success" : "Failure") . "<br>";
+        }
+        return true;
+    }
 
 
 
