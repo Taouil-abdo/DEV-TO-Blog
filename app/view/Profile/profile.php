@@ -1,96 +1,157 @@
 <?php
-
 require_once __DIR__."/../../../vendor/autoload.php";
-
-
-
+use App\Controllers\UsersController;
+$result = UsersController::getUserById();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-r from-indigo-800 to-blue-900 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in">
-        <div class="flex flex-col md:flex-row">
-            <div class="md:w-1/3 text-center mb-8 md:mb-0">
-                <img src="https://i.pravatar.cc/300" alt="Profile Picture" class="rounded-full w-48 h-48 mx-auto mb-4 border-4 border-indigo-800 dark:border-blue-900 transition-transform duration-300 hover:scale-105">
-                <h1 class="text-2xl font-bold text-indigo-800 dark:text-white mb-2">John Doe</h1>
-                <p class="text-gray-600 dark:text-gray-300">Software Developer</p>
-                <button class="mt-4 bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300">Edit Profile</button>
-            </div>
-            <div class="md:w-2/3 md:pl-8">
-                <h2 class="text-xl font-semibold text-indigo-800 dark:text-white mb-4">About Me</h2>
-                <p class="text-gray-700 dark:text-gray-300 mb-6">
-                    Passionate software developer with 5 years of experience in web technologies. 
-                    I love creating user-friendly applications and solving complex problems.
-                </p>
-                <h2 class="text-xl font-semibold text-indigo-800 dark:text-white mb-4">Skills</h2>
-                <div class="flex flex-wrap gap-2 mb-6">
-                    <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">JavaScript</span>
-                    <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">React</span>
-                    <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">Node.js</span>
-                    <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">Python</span>
-                    <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">SQL</span>
+
+<body class="bg-teal-600 min-h-screen flex-col items-center justify-center p-4">
+
+    <header class="bg-white rounded-lg mb-10">
+        <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex-1 md:flex md:items-center md:gap-12">
+                    <a class="block text-teal-600" href="../../../index.php">
+                        <span class="sr-only">Home</span>
+                        <svg class="h-8" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M0.41 10.3847C1.14777 7.4194 2.85643 4.7861 5.2639 2.90424C7.6714 1.02234 10.6393 0 13.695 0C16.7507 0 19.7186 1.02234 22.1261 2.90424C24.5336 4.7861 26.2422 7.4194 26.98 10.3847H25.78C23.7557 10.3549 21.7729 10.9599 20.11 12.1147C20.014 12.1842 19.9138 12.2477 19.81 12.3047H19.67C19.5662 12.2477 19.466 12.1842 19.37 12.1147C17.6924 10.9866 15.7166 10.3841 13.695 10.3841C11.6734 10.3841 9.6976 10.9866 8.02 12.1147C7.924 12.1842 7.8238 12.2477 7.72 12.3047H7.58C7.4762 12.2477 7.376 12.1842 7.28 12.1147C5.6171 10.9599 3.6343 10.3549 1.61 10.3847H0.41ZM23.62 16.6547C24.236 16.175 24.9995 15.924 25.78 15.9447H27.39V12.7347H25.78C24.4052 12.7181 23.0619 13.146 21.95 13.9547C21.3243 14.416 20.5674 14.6649 19.79 14.6649C19.0126 14.6649 18.2557 14.416 17.63 13.9547C16.4899 13.1611 15.1341 12.7356 13.745 12.7356C12.3559 12.7356 11.0001 13.1611 9.86 13.9547C9.2343 14.416 8.4774 14.6649 7.7 14.6649C6.9226 14.6649 6.1657 14.416 5.54 13.9547C4.4144 13.1356 3.0518 12.7072 1.66 12.7347H0V15.9447H1.61C2.39051 15.924 3.154 16.175 3.77 16.6547C4.908 17.4489 6.2623 17.8747 7.65 17.8747C9.0377 17.8747 10.392 17.4489 11.53 16.6547C12.1468 16.1765 12.9097 15.9257 13.69 15.9447C14.4708 15.9223 15.2348 16.1735 15.85 16.6547C16.9901 17.4484 18.3459 17.8738 19.735 17.8738C21.1241 17.8738 22.4799 17.4484 23.62 16.6547ZM23.62 22.3947C24.236 21.915 24.9995 21.664 25.78 21.6847H27.39V18.4747H25.78C24.4052 18.4581 23.0619 18.886 21.95 19.6947C21.3243 20.156 20.5674 20.4049 19.79 20.4049C19.0126 20.4049 18.2557 20.156 17.63 19.6947C16.4899 18.9011 15.1341 18.4757 13.745 18.4757C12.3559 18.4757 11.0001 18.9011 9.86 19.6947C9.2343 20.156 8.4774 20.4049 7.7 20.4049C6.9226 20.4049 6.1657 20.156 5.54 19.6947C4.4144 18.8757 3.0518 18.4472 1.66 18.4747H0V21.6847H1.61C2.39051 21.664 3.154 21.915 3.77 22.3947C4.908 23.1889 6.2623 23.6147 7.65 23.6147C9.0377 23.6147 10.392 23.1889 11.53 22.3947C12.1468 21.9165 12.9097 21.6657 13.69 21.6847C14.4708 21.6623 15.2348 21.9135 15.85 22.3947C16.9901 23.1884 18.3459 23.6138 19.735 23.6138C21.1241 23.6138 22.4799 23.1884 23.62 22.3947Z"
+                                fill="currentColor" />
+                        </svg>
+                        DivoBlog
+                    </a>
                 </div>
-                <h2 class="text-xl font-semibold text-indigo-800 dark:text-white mb-4">Contact Information</h2>
-                <ul class="space-y-2 text-gray-700 dark:text-gray-300">
-                    <li class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-800 dark:text-blue-900" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                        </svg>
-                        john.doe@example.com
-                    </li>
-                    <li class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-800 dark:text-blue-900" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                        </svg>
-                        +1 (555) 123-4567
-                    </li>
-                    <li class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-800 dark:text-blue-900" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                        </svg>
-                        San Francisco, CA
-                    </li>
-                </ul>
+
+                <div class="md:flex md:items-center md:gap-12">
+                    <nav aria-label="Global" class="hidden md:block">
+                        <ul class="flex items-center gap-6 text-sm">
+                            <li>
+                                <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> About </a>
+                            </li>
+
+                            <li>
+                                <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> History </a>
+                            </li>
+
+                            <li>
+                                <a class="text-gray-500 transition hover:text-gray-500/75"
+                                    href="app/view/pages/blog.php"> Blog </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div class="flex items-center gap-4">
+                        <?php if ($_SESSION["role"] != 'admin' && $_SESSION["role"] != 'user' && $_SESSION["role"] != 'author') { ?>
+                        <div class="sm:flex sm:gap-4">
+                            <a class="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow"
+                                href="app/view/Authentifcation/login.php">
+                                Login
+                            </a>
+                            <div class="hidden sm:flex">
+                                <a class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
+                                    href="app/view/Authentifcation/register.php">
+                                    Register
+                                </a>
+                            </div>''
+                        </div>
+                        <?php } elseif ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'user' || $_SESSION['role'] == 'author') { ?>
+                        <div class="flex-shrink-0">
+                            <button>
+                                <img class="w-10 h-10 rounded-full mr-4" src="https://tailwindcss.com/img/jonathan.jpg"
+                                    alt="Avatar of Jonathan Reinink">
+                            </button>
+                        </div>
+                        <?php } ?>
+                    </div>
+
+
+                    <div class="block md:hidden">
+                        <button class="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+        </div>
+    </header>
+
+    <main class="flex flex-col justify-center items-center">
+        <div
+            class="bg-white flex-col justify-center items-center dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/3 text-center mb-8 md:mb-0">
+                    <img src="../../asset/uploads/users/<?php echo $result["profile_picture"]?>" alt="Profile Picture"
+                        class="rounded-full w-48 h-48 mx-auto mb-4 border-4 border-indigo-800 dark:border-blue-900 transition-transform duration-300 hover:scale-105">
+                    <h1 class="text-2xl font-bold text-indigo-800 dark:text-white mb-2"><?php echo $result["username"]?>
+                    </h1>
+                    <p class="text-gray-600 dark:text-gray-300"><?php echo $result["role"]?></p>
+                    <a href="update.php"><button
+                            class="mt-4 bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300">Edit
+                            Profile</button></a>
+                </div>
+                <div class="md:w-2/3 md:pl-8">
+                    <h2 class="text-xl font-semibold text-indigo-800 dark:text-white mb-4">About Me</h2>
+                    <p class="text-gray-700 dark:text-gray-300 mb-6"><?= $result['bio']?>
+                        Passionate software developer with 5 years of experience in web technologies.
+                        I love creating user-friendly applications and solving complex problems.
+                    </p>
+                    <h2 class="text-xl font-semibold text-indigo-800 dark:text-white mb-4">Contact Information</h2>
+                    <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 mr-2 text-indigo-800 dark:text-blue-900" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            </svg>
+                            <?= $result['email']?>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <?php require_once __DIR__."/../../includes/Footer.php"; ?>
 
     <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+     @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
         }
-        .animate-fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+     }
+
+     .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+     }
     </style>
 
     <script>
-        // Toggle dark mode based on system preference
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-        }
+    // Toggle dark mode based on system preference
+     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+     }
 
-        // Add hover effect to skill tags
-        const skillTags = document.querySelectorAll('.bg-indigo-100');
-        skillTags.forEach(tag => {
-            tag.addEventListener('mouseover', () => {
-                tag.classList.remove('bg-indigo-100', 'text-indigo-800');
-                tag.classList.add('bg-blue-900', 'text-white');
-            });
-            tag.addEventListener('mouseout', () => {
-                tag.classList.remove('bg-blue-900', 'text-white');
-                tag.classList.add('bg-indigo-100', 'text-indigo-800');
-            });
-        });
+     
     </script>
 </body>
 

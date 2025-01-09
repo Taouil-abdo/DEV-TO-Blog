@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Config\Database;
-
+use PDO;
 
 class Articles{
 
@@ -29,7 +29,7 @@ class Articles{
 
     public static function addArticle($title,$slug,$content,$excerpt,$meta_description,$featured_image,$scheduled_date,$category_id,$author_id,$tags){
 
-        $col = "title,slug,content,excerpt,meta_description,featured_image,status,scheduled_date,category_id,author_id";
+        $col = "title,slug,content,excerpt,meta_description,featured_image,scheduled_date,category_id,author_id";
         $val = [$title,$slug,$content,$excerpt,$meta_description,$featured_image,$scheduled_date,$category_id,$author_id];
         // $tags= [$tag_id];
         // var_dump($tags);
@@ -43,7 +43,6 @@ class Articles{
 
 
     }
-
 
     public static function deleteArticle($id){
 
@@ -69,32 +68,6 @@ class Articles{
         return $Article;
 
     }
-
-
-
-    // public static function UpdateArticleAuthore($id,$title,$slug,$content,$excerpt,$meta_description,$featured_image,$scheduled_date,$category_id,$author_id,$tag_id){
-
-    //     $conn = Database::getInstanse()->getConnection();
-
-    //     $query = "UPDATE articles 
-    //       SET title = '$title', slug = '$slug', content = '$content', excerpt = '$excerpt', meta_description = '$meta_description', featured_image = '$featured_image', scheduled_date = '$scheduled_date', category_id = $category_id, author_id = $author_id
-    //       WHERE id = $id AND author_id = $author_id";
-    //     $stmt = $conn->prepare($query);
-    //     $result = $stmt->execute();
-
-    //     $deleteTagsQuery = "DELETE FROM article_tags WHERE article_id = $id";
-    //     $deleteTagsStatement = $conn->prepare($deleteTagsQuery);
-    //     $tt=$deleteTagsStatement->execute();
-
-    //     $selectedTagIds = $_POST['tag_id'] ?? [];
-    //     foreach ($selectedTagIds as $tagId) {
-    //         $ArticletagQuery = "INSERT INTO article_tags (article_id, tag_id) VALUES ($id, $tagId)";
-    //         $ArticletagStatement = $conn->prepare($ArticletagQuery);
-    //         $rrr = $ArticletagStatement->execute();
-    //     }
-    //     return true;
-    // }
-
 
     public static function getArticleByID($id){
 
@@ -162,13 +135,57 @@ class Articles{
         return true;
     }
 
+    public static function getArticlesByAuthor($id){
 
+        $conn = Database::getInstanse()->getConnection();
+        $query = "SELECT articles.*,categories.categorie_name FROM articles JOIN categories on articles.category_id = categories.id WHERE author_id = $id";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        return $result;
+
+    }
    
-   
+    public static function updateArticleStatus($status, $id){
+    $columns = "status='$status'";
+    $result = Database::update(self::$table,$columns,$id);
+    return $result; 
+
+    }
+    
+
+//    public static function lookedForArticle($Search){
+//     $table=self::$table;
+//     // "SELECT * FROM articles JOIN categories ON articles.category_id = categories.id JOIN article_tags on
+//     //  article_tags.article_id=articles.id JOIN tags on  tags.id = article_tags.tag_id "
+//     $conn = Database::getInstanse()->getConnection();
+//     $query = "SELECT * FROM articles WHERE title LIKE '%$Search%' OR content LIKE '%$Search%'";
+//     $stmt = $conn->prepare($query);
+//     $stmt->execute();
+//     $q = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//     return $q;
+//    }
+// ------------------- search ---------------------------
+   public static function lookedForArticle($Search) {
+
+    $conn = Database::getInstanse()->getConnection();
+
+    $query = "SELECT * FROM articles WHERE title LIKE :search OR content LIKE :search";
+    $stmt = $conn->prepare($query);
+    $searchParam = '%' . $Search . '%';
+    $stmt->bindParam(':search', $searchParam, PDO::PARAM_STR);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $results;
+
+}
 
 
-    
-    
+
+
+
 
 
 }

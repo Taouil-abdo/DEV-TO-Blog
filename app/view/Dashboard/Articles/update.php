@@ -1,7 +1,4 @@
 <?php
-// require_once __DIR__."/../../../controllers/ArticlesController.php";
-// require_once __DIR__."/../../../controllers/CategoriesController.php";
-// require_once __DIR__."/../../../controllers/TagsController.php";
 require_once __DIR__."/../../../../vendor/autoload.php";
 
 
@@ -9,7 +6,7 @@ use App\Controllers\ArticlesController;
 use App\Controllers\CategoriesController;
 use App\Controllers\TagsController;
 
-$row = ArticlesController::findArticleById();
+$row = ArticlesController::getArticleById();
 $Tags = TagsController::show();
 $Categories = CategoriesController::show();
 $r=ArticlesController::updateArticleForAuthore();

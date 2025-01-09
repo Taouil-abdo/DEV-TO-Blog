@@ -41,7 +41,6 @@ class UsersController{
             $email = $_POST['email'];
             $password = $_POST['password'];
             $result = Users::loginUser($email, $password);
-            var_dump($result);
         }
 
     }
@@ -51,10 +50,86 @@ class UsersController{
           if(isset($_POST['logout'])){
               session_start();
               session_destroy();
-              header("Location: ../../../index.php");
+              header("Location: ../../index.php");
               exit;
           }
           
     }
+
+    public static function getUserById(){
+           session_start();
+           $id= $_SESSION['id'];
+            $result = Users::getUserById($id);
+            return $result;
+
+    }
+
+    public static function updateUserProfile(){
+        
+        if(isset($_POST['updateProfile'])){
+
+               
+               $userName = $_POST['username'];
+               $email = $_POST['email'];
+               $bio = $_POST['bio'];
+               $password = $_POST['password'];
+               $id = $_SESSION['id'];
+
+               $profileImage = $_FILES['profileImage']['name'];
+               $temp_file = $_FILES['profileImage']['tmp_name'];
+               $folder = __DIR__ . "/../asset/uploads/users/$profileImage";
+
+               $result = Users::updateProfile($userName, $email, $password, $profileImage ,$bio ,$id);
+               var_dump($result);
+
+               return $result;
+               if($result){
+                header("Location : ../view/pages/Profile/profile.php");
+               }
+        }
+    }
+
+
+public static function deleteUser(){
+
+    if (isset($_POST['deleteUser']) ) {
+        $UserId = $_POST["UserId"];
+        $result=Users::deleteUser($UserId);
+        return $result;
+        if($result){
+        header("refresh:1");
+        }else{
+            echo "Sorry Somthing Wrong";
+        }
+
+    }
+
+    
+    
+}
+
+public static function updateUserStatus() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUser'])) {
+
+            $id = $_POST['UserId'] ;
+            $role = $_POST['role'] ;
+
+            if ($id && $role) {
+                $result = Users::updateUserRole($role, $id);
+                header("refresh:0");
+            } else {
+                echo "Error: Missing UserId or role data.";
+            }
+        }
+}
+
+
+public static function checkRole($requiredRole) {
+    session_start();
+    if (!isset($_SESSION["role"]) || $_SESSION["role"] !== $requiredRole) {
+        header("Location: ../Dashboard/Error404.php");
+        exit;
+    }
+}
 
 }

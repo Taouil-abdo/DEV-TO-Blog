@@ -121,7 +121,9 @@ class Database {
         $stmt=$conn->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+         $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $res;
+        // var_dump($res);
     }
 
     // ---------------------- update -----------------
@@ -203,6 +205,23 @@ class Database {
         }
     }
       
+
+
+
+
+//   public static function getUserStatus($table){
+
+//     $conn = self::getInstanse()->getConnection();
+
+//     $query = "SELECT role FROM $table";
+//     $stmt = $conn->prepare($query);
+//     $stmt->execute();
+//     $users = $stmt->fetchAll();
+//     return $users;
+
+//   }
+
+
 }
 
 // $bn=Database::Add('tags','tag_name','"lol"');

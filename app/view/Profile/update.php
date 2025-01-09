@@ -1,47 +1,165 @@
+<?php
+
+require_once __DIR__."/../../../vendor/autoload.php";
+use App\Controllers\UsersController;
+$rows = UsersController::getUserById();
+$result = UsersController::updateUserProfile();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>update</title>
 </head>
-<body>
+
+<body class="bg-teal-600 min-h-screen flex-col items-center justify-center p-4">
+<header class="bg-white rounded-lg mb-10">
+  <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
+      <div class="flex-1 md:flex md:items-center md:gap-12">
+        <a class="block text-teal-600" href="#">
+          <span class="sr-only">Home</span>
+          <svg class="h-8" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M0.41 10.3847C1.14777 7.4194 2.85643 4.7861 5.2639 2.90424C7.6714 1.02234 10.6393 0 13.695 0C16.7507 0 19.7186 1.02234 22.1261 2.90424C24.5336 4.7861 26.2422 7.4194 26.98 10.3847H25.78C23.7557 10.3549 21.7729 10.9599 20.11 12.1147C20.014 12.1842 19.9138 12.2477 19.81 12.3047H19.67C19.5662 12.2477 19.466 12.1842 19.37 12.1147C17.6924 10.9866 15.7166 10.3841 13.695 10.3841C11.6734 10.3841 9.6976 10.9866 8.02 12.1147C7.924 12.1842 7.8238 12.2477 7.72 12.3047H7.58C7.4762 12.2477 7.376 12.1842 7.28 12.1147C5.6171 10.9599 3.6343 10.3549 1.61 10.3847H0.41ZM23.62 16.6547C24.236 16.175 24.9995 15.924 25.78 15.9447H27.39V12.7347H25.78C24.4052 12.7181 23.0619 13.146 21.95 13.9547C21.3243 14.416 20.5674 14.6649 19.79 14.6649C19.0126 14.6649 18.2557 14.416 17.63 13.9547C16.4899 13.1611 15.1341 12.7356 13.745 12.7356C12.3559 12.7356 11.0001 13.1611 9.86 13.9547C9.2343 14.416 8.4774 14.6649 7.7 14.6649C6.9226 14.6649 6.1657 14.416 5.54 13.9547C4.4144 13.1356 3.0518 12.7072 1.66 12.7347H0V15.9447H1.61C2.39051 15.924 3.154 16.175 3.77 16.6547C4.908 17.4489 6.2623 17.8747 7.65 17.8747C9.0377 17.8747 10.392 17.4489 11.53 16.6547C12.1468 16.1765 12.9097 15.9257 13.69 15.9447C14.4708 15.9223 15.2348 16.1735 15.85 16.6547C16.9901 17.4484 18.3459 17.8738 19.735 17.8738C21.1241 17.8738 22.4799 17.4484 23.62 16.6547ZM23.62 22.3947C24.236 21.915 24.9995 21.664 25.78 21.6847H27.39V18.4747H25.78C24.4052 18.4581 23.0619 18.886 21.95 19.6947C21.3243 20.156 20.5674 20.4049 19.79 20.4049C19.0126 20.4049 18.2557 20.156 17.63 19.6947C16.4899 18.9011 15.1341 18.4757 13.745 18.4757C12.3559 18.4757 11.0001 18.9011 9.86 19.6947C9.2343 20.156 8.4774 20.4049 7.7 20.4049C6.9226 20.4049 6.1657 20.156 5.54 19.6947C4.4144 18.8757 3.0518 18.4472 1.66 18.4747H0V21.6847H1.61C2.39051 21.664 3.154 21.915 3.77 22.3947C4.908 23.1889 6.2623 23.6147 7.65 23.6147C9.0377 23.6147 10.392 23.1889 11.53 22.3947C12.1468 21.9165 12.9097 21.6657 13.69 21.6847C14.4708 21.6623 15.2348 21.9135 15.85 22.3947C16.9901 23.1884 18.3459 23.6138 19.735 23.6138C21.1241 23.6138 22.4799 23.1884 23.62 22.3947Z"
+              fill="currentColor"
+            />
+          </svg>
+          DivoBlog
+        </a>
+      </div>
+
+      <div class="md:flex md:items-center md:gap-12">
+        <nav aria-label="Global" class="hidden md:block">
+          <ul class="flex items-center gap-6 text-sm">
+            <li>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> About </a>
+            </li>
+
+            <li>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> History </a>
+            </li>
+
+            <li>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="app/view/pages/blog.php"> Blog </a>
+            </li>
+          </ul>
+        </nav>
+
+          <div class="flex items-center gap-4">
+            <?php if ($_SESSION["role"] != 'admin' && $_SESSION["role"] != 'user' && $_SESSION["role"] != 'author') { ?>
+                <div class="sm:flex sm:gap-4">
+                     <a class="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow" href="app/view/Authentifcation/login.php">
+                      Login
+                     </a>
+                   <div class="hidden sm:flex">
+                     <a class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600" href="app/view/Authentifcation/register.php">
+                    Register
+                     </a>
+                   </div>''
+                </div>
+            <?php } elseif ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'user' || $_SESSION['role'] == 'author') { ?>
+                <div class="flex-shrink-0">
+                  <button>
+                   <img class="w-10 h-10 rounded-full mr-4" src="https://tailwindcss.com/img/jonathan.jpg" alt="Avatar of Jonathan Reinink">
+                  </button>
+                </div>
+            <?php } ?>
+          </div>
 
 
-<form method="POST" class="max-w-md mx-auto">
-        <div>
-          <h1 class="text-2xl font-semibold">register</h1>
-        </div>
-        <div class="divide-y divide-gray-200">
-          <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-            <div class="relative">
-              <input id="profileImage" name="profileImage" type="file" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="UserName" />
-            </div>
-            <div class="relative">
-              <input autocomplete="off" id="username" name="username" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="UserName" />
-              <label for="username" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Username</label>
-            </div>
-            <div class="relative">
-              <input autocomplete="off" id="email" name="email" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
-              <label for="email" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
-            </div>
-            <div class="relative">
-              <input autocomplete="off" id="password" name="password" type="password" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Password" />
-              <label for="password" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
-            </div>
-            <div class="relative">
-              <textarea autocomplete="off" id="bio" name="bio" type="" class="peer placeholder-transparent h-20 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="bio"></textarea>
-              <label for="bio" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">bio</label>
-            </div>
-            <div class="relative">
-              <button type="submit" name="updateProfile" class="bg-teal-900 text-white rounded-md px-2 py-1">Submit</button>
-            </div>
+          <div class="block md:hidden">
+            <button class="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </div>
-      </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<form method="POST" enctype="multipart/form-data"
+        class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6 space-y-6 dark:bg-gray-800">
+        <div class="text-center">
+            <p class="text-gray-600 dark:text-gray-400 mt-2">update your account by filling out the details below</p>
+        </div>
+        <div class="space-y-4">
+            <!-- Profile Image -->
+            <div class="flex flex-col items-center">
+                <label for="profileImage" class="cursor-pointer">
+                    <img src="https://i.pravatar.cc/300" alt="Profile Picture"
+                        class="bg-gray-100 rounded-full w-48 h-48 mb-4 border-4 border-teal-600 dark:border-teal-800 hover:scale-105 transition-transform duration-300">
+                </label>
+                <input id="profileImage" name="profileImage" type="file" class="hidden" accept="image/*">
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Click to upload your profile picture</p>
+            </div>
+
+            <!-- Username -->
+            <div class="relative">
+                <input autocomplete="off" id="username" value="<?= $rows['username']?>" name="username" type="text"
+                    class="peer placeholder-transparent h-12 w-full rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-800 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none px-4"
+                    placeholder="Username" />
+                <label for="username"
+                    class="absolute right-3 top-6 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-indigo-800 dark:peer-focus:text-white">Username</label>
+            </div>
+
+            <!-- Email -->
+            <div class="relative">
+                <input autocomplete="off" id="email" value="<?= $rows['email']?>" name="email" type="email"
+                    class="peer placeholder-transparent h-12 w-full rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-800 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none px-4"
+                    placeholder="Email Address" />
+                <label for="email"
+                    class="absolute right-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-indigo-800 dark:peer-focus:text-white">Email
+                    Address</label>
+            </div>
+
+            <!-- Password -->
+            <div class="relative">
+                <input id="password" value="<?= $rows['password_hash']?>" name="password" type="password"
+                    class="peer placeholder-transparent h-12 w-full rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-800 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none px-4"
+                    placeholder="Password" />
+                <label for="password"
+                    class="absolute right-3 top-7 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-indigo-800 dark:peer-focus:text-white">Password</label>
+            </div>
+
+            <!-- Bio -->
+            <div class="relative">
+                <textarea id="bio" name="bio" value="<?= $rows['bio']?>"
+                    class="peer placeholder-transparent h-24 w-full rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-800 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none px-4 resize-none"
+                    placeholder="Write something about yourself..."><?= $rows['bio']?></textarea>
+                <label for="bio"
+                    class="absolute right-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-indigo-800 dark:peer-focus:text-white">Bio</label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" name="updateProfile"
+                    class="bg-teal-600 text-white rounded-lg px-6 py-2 shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all dark:bg-indigo-700 dark:hover:bg-indigo-800">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+</main>
+
+<?php require_once __DIR__."/../../includes/Footer.php"; ?>
 
 
-
-    
 </body>
+
 </html>
